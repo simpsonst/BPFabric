@@ -606,46 +606,55 @@ int agent_stop(void)
     return sigint;
 }
 
+#include <openssl/sha.h>
 #include "ebpf_digest.h"
+
+union digest_ctxts {
+    struct digest_ctxt generic;
+    struct digest_ctxt_SHA256 SHA256;
+};
 
 static void digest_init(void *vctxt, const void *params)
 {
-    struct digest_ctxt *ctxt = vctxt;
-    switch (ctxt->type) {
+    union digest_ctxts *ctxt = vctxt;
+    switch (ctxt->generic.type) {
     default:
         abort();
         break;
 
     case digest_SHA256:
-        /* TODO */
+        if (SHA256_Init(&ctxt->SHA256.state) != 1)
+            abort();
         break;
     }
 }
 
 static void digest_update(void *vctxt, const void *base, size_t len)
 {
-    struct digest_ctxt *ctxt = vctxt;
-    switch (ctxt->type) {
+    union digest_ctxts *ctxt = vctxt;
+    switch (ctxt->generic.type) {
     default:
         abort();
         break;
 
     case digest_SHA256:
-        /* TODO */
+        if (SHA256_Update(&ctxt->SHA256.state, base, len) != 1)
+            abort();
         break;
     }
 }
 
 static void digest_final(void *vctxt, void *res)
 {
-    struct digest_ctxt *ctxt = vctxt;
-    switch (ctxt->type) {
+    union digest_ctxts *ctxt = vctxt;
+    switch (ctxt->generic.type) {
     default:
         abort();
         break;
 
     case digest_SHA256:
-        /* TODO */
+        if (SHA256_Final(res, &ctxt->SHA256.state) != 1)
+            abort();
         break;
     }
 }
