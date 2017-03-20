@@ -1,5 +1,5 @@
 agent.o: agent.c
-	gcc -c agent.c -I../ubpf/inc -I../protocol/src/c -I../bpfmap
+	gcc -c agent.c -I../ubpf/inc -I../protocol/src/c -I../bpfmap -I../includes
 	ar cr agent.a agent.o
 
 clean:

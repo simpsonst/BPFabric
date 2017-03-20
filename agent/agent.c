@@ -1,3 +1,5 @@
+// -*- c-basic-offset: 4; indent-tabs-mode: nil -*-
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -8,12 +10,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <strings.h>
 #include <pthread.h>
 
 #include <errno.h>
 
 #include "ubpf.h"
 #include "bpfmap.h"
+#include "ebpf_fntypes.h"
 
 #include "Header.pb-c.h"
 #include "Hello.pb-c.h"
@@ -507,10 +511,17 @@ void *agent_task()
     //
     vm = ubpf_create();
 
+    /* (Re-)declare exposed functions to check their signatures.
+       Note: the original functions do not match! */
+    BPF_FNCHECK(bzero);
+    BPF_FNCHECK(bcopy);
+
     // Register the map functions
     ubpf_register(vm, 1, "bpf_map_lookup_elem", bpf_lookup_elem);
     ubpf_register(vm, 2, "bpf_map_update_elem", bpf_update_elem);
     ubpf_register(vm, 3, "bpf_map_delete_elem", bpf_delete_elem);
+    BPF_REGISTER(vm, bzero);
+    BPF_REGISTER(vm, bcopy);
     ubpf_register(vm, 31, "bpf_notify", bpf_notify);
     ubpf_register(vm, 32, "bpf_debug", bpf_debug);
 
