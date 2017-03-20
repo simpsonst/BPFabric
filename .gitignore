@@ -3,9 +3,11 @@
 *.o.d
 *.o.cmd
 *.a
+*~
 protocol/src/c
 protocol/src/python
 dpdkswitch/build
+softswitch/softswitch
 examples/*.bin
 examples/*.asm
 
