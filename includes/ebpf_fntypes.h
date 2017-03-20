@@ -33,12 +33,18 @@ extern "C" {
     typedef void *BPF_FNTYPE(bpf_debug)(char *);
     typedef void BPF_FNTYPE(bzero)(void *, size_t);
     typedef void BPF_FNTYPE(bcopy)(const void *src, void *dest, size_t n);
+    typedef void BPF_FNTYPE(digest_init)(void *ctxt, const void *params);
+    typedef void BPF_FNTYPE(digest_update)(void *ctxt, const void *, size_t);
+    typedef void BPF_FNTYPE(digest_final)(void *ctxt, void *res);
 
     /* Each external function needs a unique numeric code. */
     enum {
         BPF_FUNC_bpf_map_lookup_elem = 1,
         BPF_FUNC_bpf_map_update_elem = 2,
         BPF_FUNC_bpf_map_delete_elem = 3,
+        BPF_FUNC_digest_init = 26,
+        BPF_FUNC_digest_update = 27,
+        BPF_FUNC_digest_final = 28,
         BPF_FUNC_bcopy = 29,
         BPF_FUNC_bzero = 30,
         BPF_FUNC_bpf_notify = 31,

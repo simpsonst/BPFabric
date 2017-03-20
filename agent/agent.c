@@ -488,6 +488,14 @@ uint64_t bpf_notify(uint64_t r1, uint64_t r2, uint64_t r3, uint64_t r4, uint64_t
     return 0;
 }
 
+/* (Re-)declare exposed functions to check their signatures.
+   Note: the original functions do not match! */
+BPF_FNCHECK(bzero);
+BPF_FNCHECK(bcopy);
+static BPF_FNCHECK(digest_init);
+static BPF_FNCHECK(digest_update);
+static BPF_FNCHECK(digest_final);
+
 void *agent_task()
 {
     //
@@ -511,10 +519,6 @@ void *agent_task()
     //
     vm = ubpf_create();
 
-    /* (Re-)declare exposed functions to check their signatures.
-       Note: the original functions do not match! */
-    BPF_FNCHECK(bzero);
-    BPF_FNCHECK(bcopy);
 
     // Register the map functions
     ubpf_register(vm, 1, "bpf_map_lookup_elem", bpf_lookup_elem);
@@ -600,4 +604,48 @@ int agent_stop(void)
 {
     sigint = 1;
     return sigint;
+}
+
+#include "ebpf_digest.h"
+
+static void digest_init(void *vctxt, const void *params)
+{
+    struct digest_ctxt *ctxt = vctxt;
+    switch (ctxt->type) {
+    default:
+        abort();
+        break;
+
+    case digest_SHA256:
+        /* TODO */
+        break;
+    }
+}
+
+static void digest_update(void *vctxt, const void *base, size_t len)
+{
+    struct digest_ctxt *ctxt = vctxt;
+    switch (ctxt->type) {
+    default:
+        abort();
+        break;
+
+    case digest_SHA256:
+        /* TODO */
+        break;
+    }
+}
+
+static void digest_final(void *vctxt, void *res)
+{
+    struct digest_ctxt *ctxt = vctxt;
+    switch (ctxt->type) {
+    default:
+        abort();
+        break;
+
+    case digest_SHA256:
+        /* TODO */
+        break;
+    }
 }

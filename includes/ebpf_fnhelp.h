@@ -13,7 +13,7 @@
 
 #if ! __BPF__
 /* Use these from native code to check signatures. */
-#define BPF_FNCHECKAS(N, A) extern BPF_FNTYPE(N) A
+#define BPF_FNCHECKAS(N, A) BPF_FNTYPE(N) A
 #define BPF_FNCHECK(N) BPF_FNCHECKAS(N, N)
 
 /* Expose a function to the VM. */
