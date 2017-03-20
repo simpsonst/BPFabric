@@ -1,10 +1,16 @@
+// -*- c-basic-offset: 4; indent-tabs-mode: nil -*-
+
 #ifndef __EBPF_SWITCH_H
 #define __EBPF_SWITCH_H
 
 #include "ebpf_consts.h"
 #include "ebpf_functions.h"
 
+#if __BPF__
 #define SEC(NAME) __attribute__((section(NAME), used))
+#else
+#define SEC(NAME)
+#endif
 
 struct bpf_map_def {
     unsigned int type;
@@ -13,5 +19,14 @@ struct bpf_map_def {
     unsigned int max_entries;
     unsigned int map_flags;
 };
+
+#define BPF_MAP(I,T,K,V,N,F)             \
+    struct bpf_map_def SEC("maps") I = { \
+        .map_type = BPF_MAP_TYPE_##T,    \
+        .key_size = sizeof(K),           \
+        .value_size = sizeof(V),         \
+        .max_entries = (N),              \
+        .map_flags = (F),                \
+    }
 
 #endif
