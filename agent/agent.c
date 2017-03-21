@@ -495,6 +495,7 @@ BPF_FNCHECK(bcopy);
 static BPF_FNCHECK(digest_init);
 static BPF_FNCHECK(digest_update);
 static BPF_FNCHECK(digest_final);
+static BPF_FNCHECK(crypt_verify);
 
 void *agent_task()
 {
@@ -657,4 +658,28 @@ static void digest_final(void *vctxt, void *res)
             abort();
         break;
     }
+}
+
+#include "ebpf_crypt.h"
+
+union crypt_ctxts {
+    crypt_ctxt_t generic;
+};
+
+static int crypt_verify(void *vctxt,
+                        const unsigned char *hash,
+                        size_t hashlen,
+                        const unsigned char *sig,
+                        const unsigned char *pubkey)
+{
+    union crypt_ctxts *ctxt = vctxt;
+    switch (ctxt->generic.type) {
+    default:
+        abort();
+        break;
+
+    case crypt_SEPC256K1:
+        return uECC_verify(pubkey, hash, hashlen, sig, uECC_secp256k1());
+    }
+    return -1;
 }

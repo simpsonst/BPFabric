@@ -46,7 +46,7 @@ APP = dpdkswitch
 # all source are stored in SRCS-y
 VPATH = ./
 SRCS-y := main.c
-LDLIBS := $(ROOT_DIR)/../agent/agent.a $(ROOT_DIR)/../ubpf/libubpf.a $(ROOT_DIR)/../protocol/src/c/protocol.a $(ROOT_DIR)/../bpfmap/libbpfmap.a -lprotobuf-c -lssl -lcrypto
+LDLIBS := $(ROOT_DIR)/../agent/agent.a $(ROOT_DIR)/../ubpf/libubpf.a $(ROOT_DIR)/../protocol/src/c/protocol.a $(ROOT_DIR)/../bpfmap/libbpfmap.a -lprotobuf-c -lssl -lcrypto -luECC
 
 CFLAGS += -g -I$(ROOT_DIR)/../includes -I$(ROOT_DIR)/../agent -I$(ROOT_DIR)/../ubpf/inc -I$(ROOT_DIR)/../protocol/src/c
 CFLAGS += $(WERROR_FLAGS)

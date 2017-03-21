@@ -36,6 +36,11 @@ extern "C" {
     typedef void BPF_FNTYPE(digest_init)(void *ctxt, const void *params);
     typedef void BPF_FNTYPE(digest_update)(void *ctxt, const void *, size_t);
     typedef void BPF_FNTYPE(digest_final)(void *ctxt, void *res);
+    typedef int BPF_FNTYPE(crypt_verify)(void *ctxt,
+                                         const unsigned char *hash,
+                                         size_t hashlen,
+                                         const unsigned char *sig,
+                                         const unsigned char *pubkey);
 
     /* Each external function needs a unique numeric code. */
     enum {
