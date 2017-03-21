@@ -610,8 +610,8 @@ int agent_stop(void)
 #include "ebpf_digest.h"
 
 union digest_ctxts {
-    struct digest_ctxt generic;
-    struct digest_ctxt_SHA256 SHA256;
+    digest_ctxt_t generic;
+    digest_ctxt_SHA256_t SHA256;
 };
 
 static void digest_init(void *vctxt, const void *params)
