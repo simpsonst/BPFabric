@@ -525,6 +525,10 @@ void *agent_task()
     ubpf_register(vm, 1, "bpf_map_lookup_elem", bpf_lookup_elem);
     ubpf_register(vm, 2, "bpf_map_update_elem", bpf_update_elem);
     ubpf_register(vm, 3, "bpf_map_delete_elem", bpf_delete_elem);
+    BPF_REGISTER(vm, digest_init);
+    BPF_REGISTER(vm, digest_update);
+    BPF_REGISTER(vm, digest_final);
+    BPF_REGISTER(vm, crypt_verify);
     BPF_REGISTER(vm, bzero);
     BPF_REGISTER(vm, bcopy);
     ubpf_register(vm, 31, "bpf_notify", bpf_notify);

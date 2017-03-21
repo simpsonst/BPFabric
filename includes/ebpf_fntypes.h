@@ -47,6 +47,7 @@ extern "C" {
         BPF_FUNC_bpf_map_lookup_elem = 1,
         BPF_FUNC_bpf_map_update_elem = 2,
         BPF_FUNC_bpf_map_delete_elem = 3,
+        BPF_FUNC_crypt_verify = 25,
         BPF_FUNC_digest_init = 26,
         BPF_FUNC_digest_update = 27,
         BPF_FUNC_digest_final = 28,
