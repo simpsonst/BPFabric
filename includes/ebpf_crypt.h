@@ -13,8 +13,8 @@ extern "C" {
         crypt_SEPC256K1,
     };
 
-#define CRYPT_CTXT1(CT) crypt_ctxt_ ## CT = { .type = crypt_ ## CT }
-#define CRYPT_CTXT(CT) CRYPT_CTXT1(CT)
+#define CRYPT_CTXT1(CT, V) crypt_ctxt_ ## CT ## _t V = { .type = crypt_ ## CT }
+#define CRYPT_CTXT(CT, V) CRYPT_CTXT1(CT, V)
 #define CRYPT_SIGSIZE1(CT) CRYPT_SIGSIZE_ ## CT
 #define CRYPT_SIGSIZE(CT) CRYPT_SIGSIZE1(CT)
 #define CRYPT_SIG1(CT) crypt_ ## CT ## _sig_t

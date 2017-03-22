@@ -13,8 +13,8 @@ extern "C" {
         digest_SHA256,
     };
 
-#define DIGEST_CTXT1(DT) digest_ctxt_ ## DT ## _t = { .type = digest_ ## DT }
-#define DIGEST_CTXT(DT) DIGEST_CTXT1(DT)
+#define DIGEST_CTXT1(DT, V) digest_ctxt_ ## DT ## _t V = { .type = digest_ ## DT }
+#define DIGEST_CTXT(DT, V) DIGEST_CTXT1(DT, V)
 #define DIGEST_SIZE1(DT) DIGEST_SIZE_ ## DT
 #define DIGEST_SIZE(DT) DIGEST_SIZE1(DT)
 #define DIGEST1(DT) digest_ ## DT ## _t
