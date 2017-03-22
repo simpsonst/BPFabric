@@ -25,7 +25,7 @@ struct bpf_map_def {
 
 #define BPF_MAP(I,T,K,V,N,F)             \
     struct bpf_map_def SEC("maps") I = { \
-        .map_type = BPF_MAP_TYPE_##T,    \
+        .type = BPF_MAP_TYPE_##T,        \
         .key_size = sizeof(K),           \
         .value_size = sizeof(V),         \
         .max_entries = (N),              \
