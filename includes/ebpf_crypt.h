@@ -13,11 +13,16 @@ extern "C" {
         crypt_SEPC256K1,
     };
 
-#define CRYPT_CTXT(CT) crypt_ctxt_ ## CT = { .type = crypt_ ## CT }
-#define CRYPT_SIGSIZE(CT) CRYPT_SIGSIZE_ ## CT
-#define CRYPT_SIG(CT) crypt_ ## CT ## _sig_t
-#define CRYPT_PUBKEYSIZE(CT) CRYPT_PUBKEYSIZE_ ## CT
-#define CRYPT_PUBKEY(CT) crypt_ ## CT ## _pubkey_t
+#define CRYPT_CTXT1(CT) crypt_ctxt_ ## CT = { .type = crypt_ ## CT }
+#define CRYPT_CTXT(CT) CRYPT_CTXT1(CT)
+#define CRYPT_SIGSIZE1(CT) CRYPT_SIGSIZE_ ## CT
+#define CRYPT_SIGSIZE(CT) CRYPT_SIGSIZE1(CT)
+#define CRYPT_SIG1(CT) crypt_ ## CT ## _sig_t
+#define CRYPT_SIG(CT) CRYPT_SIG1(CT)
+#define CRYPT_PUBKEYSIZE1(CT) CRYPT_PUBKEYSIZE_ ## CT
+#define CRYPT_PUBKEYSIZE(CT) CRYPT_PUBKEYSIZE1(CT)
+#define CRYPT_PUBKEY1(CT) crypt_ ## CT ## _pubkey_t
+#define CRYPT_PUBKEY(CT) CRYPT_PUBKEY1(CT)
 
 #define DECLARE_CRYPT_SIGTYPE(CT)                               \
     typedef unsigned char CRYPT_SIG(CT)[CRYPT_SIGSIZE(CT)]

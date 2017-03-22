@@ -13,9 +13,12 @@ extern "C" {
         digest_SHA256,
     };
 
-#define DIGEST_CTXT(DT) digest_ctxt_ ## DT ## _t = { .type = digest_ ## DT }
-#define DIGEST_SIZE(DT) DIGEST_SIZE_ ## DT
-#define DIGEST(DT) digest_ ## DT ## _t
+#define DIGEST_CTXT1(DT) digest_ctxt_ ## DT ## _t = { .type = digest_ ## DT }
+#define DIGEST_CTXT(DT) DIGEST_CTXT1(DT)
+#define DIGEST_SIZE1(DT) DIGEST_SIZE_ ## DT
+#define DIGEST_SIZE(DT) DIGEST_SIZE1(DT)
+#define DIGEST1(DT) digest_ ## DT ## _t
+#define DIGEST(DT) DIGEST1(DT)
 
 #define DECLARE_DIGEST_TYPE(DT)                         \
     typedef unsigned char DIGEST(DT)[DIGEST_SIZE(DT)]
