@@ -1,4 +1,6 @@
 #include <linux/if_ether.h>
+#include "ebpf_consts.h"
+#include "ebpf_functions.h"
 #include "ebpf_switch.h"
 
 struct bpf_map_def SEC("maps") inports = {

@@ -3,14 +3,17 @@
 #ifndef __EBPF_SWITCH_H
 #define __EBPF_SWITCH_H
 
-#include "ebpf_consts.h"
-#include "ebpf_functions.h"
-
 #if __BPF__
 #define SEC(NAME) __attribute__((section(NAME), used))
 #else
 #define SEC(NAME)
 #endif
+
+enum bpf_map_type {
+    BPF_MAP_TYPE_UNSPEC,
+    BPF_MAP_TYPE_HASH,
+    BPF_MAP_TYPE_ARRAY,
+};
 
 struct bpf_map_def {
     unsigned int type;

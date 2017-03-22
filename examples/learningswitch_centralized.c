@@ -1,5 +1,7 @@
 #include <linux/if_ether.h>
+#include "ebpf_consts.h"
 #include "ebpf_switch.h"
+#include "ebpf_functions.h"
 
 struct bpf_map_def SEC("maps") inports = {
     .type = BPF_MAP_TYPE_HASH,

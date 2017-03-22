@@ -1,7 +1,6 @@
 #ifndef __EBPF_SWITCH_CONSTS_H
 #define __EBPF_SWITCH_CONSTS_H
 
-#include <linux/bpf.h>
 #include <linux/if_ether.h>
 #include <stdint.h>
 

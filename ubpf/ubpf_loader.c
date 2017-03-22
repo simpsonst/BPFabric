@@ -40,15 +40,6 @@ struct section {
     uint64_t size;
 };
 
-// Should we replace this with the definition in linux/bpf.h?
-struct bpf_map_def {
-    unsigned int type;
-    unsigned int key_size;
-    unsigned int value_size;
-    unsigned int max_entries;
-    unsigned int map_flags;
-};
-
 #ifndef EM_BPF
 #define EM_BPF 0xF7
 #endif

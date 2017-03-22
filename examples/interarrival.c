@@ -1,3 +1,6 @@
+#include <stdint.h>
+#include "ebpf_consts.h"
+#include "ebpf_functions.h"
 #include "ebpf_switch.h"
 
 #define NBUCKETS 64

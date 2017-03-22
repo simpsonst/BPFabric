@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "ebpf_switch.h"
+
 /* flags for BPF_MAP_UPDATE_ELEM command */
 #define BPF_ANY         0 /* create new element or update existing */
 #define BPF_NOEXIST     1 /* create new element if it didn't exist */
@@ -26,12 +28,6 @@
         (type *)( (char *)__mptr - offsetof(type,member) );})
 
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
-
-enum bpf_map_type {
-    BPF_MAP_TYPE_UNSPEC,
-    BPF_MAP_TYPE_HASH,
-    BPF_MAP_TYPE_ARRAY,
-};
 
 union bpf_attr {
     struct { /* anonymous struct used by BPF_MAP_CREATE command */

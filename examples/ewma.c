@@ -1,4 +1,6 @@
 #include <linux/if_ether.h>
+#include "ebpf_consts.h"
+#include "ebpf_functions.h"
 #include "ebpf_switch.h"
 
 #define EWMA_DELTA    5   // in seconds

@@ -13,6 +13,8 @@ bpfmap_mods += hashtab
 bpfmap_mods += libghthash/hash_functions
 bpfmap_mods += libghthash/hash_table
 
+CPPFLAGS += -I../includes
+
 libbpfmap.a: $(bpfmap_mods:%=%.o)
 	$(AR) r '$@' $(bpfmap_mods:%=%.o)
 

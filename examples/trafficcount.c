@@ -1,6 +1,8 @@
 #include <linux/if_ether.h>
 #include <linux/ip.h>
 #include <linux/icmp.h>
+#include "ebpf_consts.h"
+#include "ebpf_functions.h"
 #include "ebpf_switch.h"
 
 struct countentry {
