@@ -12,6 +12,7 @@ BPF_FN(bpf_map_delete_elem);
 BPF_FN(bpf_notify);
 BPF_FN(bpf_debug);
 BPF_FN(bzero);
+BPF_FN(bsalt);
 BPF_FN(bcopy);
 BPF_FN(digest_init);
 BPF_FN(digest_update);

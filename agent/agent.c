@@ -492,6 +492,7 @@ uint64_t bpf_notify(uint64_t r1, uint64_t r2, uint64_t r3, uint64_t r4, uint64_t
    Note: the original functions do not match! */
 BPF_FNCHECK(bzero);
 BPF_FNCHECK(bcopy);
+static BPF_FNCHECK(bsalt);
 static BPF_FNCHECK(digest_init);
 static BPF_FNCHECK(digest_update);
 static BPF_FNCHECK(digest_final);
@@ -531,6 +532,7 @@ void *agent_task()
     BPF_REGISTER(vm, crypt_verify);
     BPF_REGISTER(vm, bzero);
     BPF_REGISTER(vm, bcopy);
+    BPF_REGISTER(vm, bsalt);
     ubpf_register(vm, 31, "bpf_notify", bpf_notify);
     ubpf_register(vm, 32, "bpf_debug", bpf_debug);
 
@@ -609,6 +611,15 @@ int agent_stop(void)
 {
     sigint = 1;
     return sigint;
+}
+
+static void bsalt(void *base, size_t len)
+{
+    unsigned char *p = base;
+    while (len > 0) {
+        *p = rand() / (RAND_MAX + 1.0) * 256;
+        len--;
+    }
 }
 
 #include <openssl/sha.h>

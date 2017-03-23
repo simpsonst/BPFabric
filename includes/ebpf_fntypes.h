@@ -32,6 +32,7 @@ extern "C" {
     typedef void *BPF_FNTYPE(bpf_notify)(int id, void *data, int len);
     typedef void *BPF_FNTYPE(bpf_debug)(const char *);
     typedef void BPF_FNTYPE(bzero)(void *, size_t);
+    typedef void BPF_FNTYPE(bsalt)(void *, size_t);
     typedef void BPF_FNTYPE(bcopy)(const void *src, void *dest, size_t n);
     typedef void BPF_FNTYPE(digest_init)(void *ctxt, const void *params);
     typedef void BPF_FNTYPE(digest_update)(void *ctxt, const void *, size_t);
@@ -47,6 +48,7 @@ extern "C" {
         BPF_FUNC_bpf_map_lookup_elem = 1,
         BPF_FUNC_bpf_map_update_elem = 2,
         BPF_FUNC_bpf_map_delete_elem = 3,
+        BPF_FUNC_bsalt = 24,
         BPF_FUNC_crypt_verify = 25,
         BPF_FUNC_digest_init = 26,
         BPF_FUNC_digest_update = 27,
