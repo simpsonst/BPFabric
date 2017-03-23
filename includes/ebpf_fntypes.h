@@ -30,7 +30,7 @@ extern "C" {
                                                 unsigned long long flags);
     typedef int BPF_FNTYPE(bpf_map_delete_elem)(void *map, void *key);
     typedef void *BPF_FNTYPE(bpf_notify)(int id, void *data, int len);
-    typedef void *BPF_FNTYPE(bpf_debug)(char *);
+    typedef void *BPF_FNTYPE(bpf_debug)(const char *);
     typedef void BPF_FNTYPE(bzero)(void *, size_t);
     typedef void BPF_FNTYPE(bcopy)(const void *src, void *dest, size_t n);
     typedef void BPF_FNTYPE(digest_init)(void *ctxt, const void *params);
