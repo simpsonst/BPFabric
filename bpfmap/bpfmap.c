@@ -1,3 +1,5 @@
+// -*- c-basic-offset: 4; indent-tabs-mode: nil -*-
+
 #include <sys/queue.h>
 #include <string.h>
 
@@ -29,7 +31,8 @@ const struct bpf_map_ops bpf_map_types[] = {
     }
 };
 
-int bpf_create_map(enum bpf_map_type map_type, int key_size, int value_size, int max_entries) {
+int bpf_create_map(enum bpf_map_type map_type, int key_size,
+                   int value_size, int max_entries) {
     union bpf_attr attr;
 
     memset(&attr, 0, sizeof(attr));
@@ -63,12 +66,13 @@ int bpf_create_map(enum bpf_map_type map_type, int key_size, int value_size, int
     return map_idx;
 }
 
-int bpf_update_elem(int map, void *key, void *value, unsigned long long flags) {
+int bpf_update_elem(int map, const void *key, const void *value,
+                    unsigned long long flags) {
     struct bpf_map *m = bpf_maps[map];
     return m->ops->map_update_elem(m, key, value, flags);
 }
 
-int bpf_lookup_elem(int map, void *key, void *value) {
+int bpf_lookup_elem(int map, const void *key, void *value) {
     void **v = value;
     *v = NULL;
 
@@ -81,12 +85,12 @@ int bpf_lookup_elem(int map, void *key, void *value) {
     return 0;
 }
 
-int bpf_delete_elem(int map, void *key) {
+int bpf_delete_elem(int map, const void *key) {
     struct bpf_map *m = bpf_maps[map];
     return m->ops->map_delete_elem(m, key);
 }
 
-int bpf_get_next_key(int map, void *key, void *next_key) {
+int bpf_get_next_key(int map, const void *key, void *next_key) {
     struct bpf_map *m = bpf_maps[map];
     return m->ops->map_get_next_key(m, key, next_key);
 }

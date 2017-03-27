@@ -24,13 +24,14 @@ extern "C" {
        native C, it should be declared using this type to ensure
        matching signatures. */
     typedef int BPF_FNTYPE(bpf_map_lookup_elem)(void *map,
-                                                void *key, void *value);
-    typedef int BPF_FNTYPE(bpf_map_update_elem)(void *map, void *key,
-                                                void *value,
+                                                const void *key, void *value);
+    typedef int BPF_FNTYPE(bpf_map_update_elem)(void *map, const void *key,
+                                                const void *value,
                                                 unsigned long long flags);
-    typedef int BPF_FNTYPE(bpf_map_delete_elem)(void *map, void *key);
+    typedef int BPF_FNTYPE(bpf_map_delete_elem)(void *map, const void *key);
     typedef void *BPF_FNTYPE(bpf_notify)(int id, void *data, int len);
     typedef void *BPF_FNTYPE(bpf_debug)(const char *);
+    typedef void BPF_FNTYPE(bpf_trace)(const char *, uint64_t ln, uint64_t v);
     typedef void BPF_FNTYPE(bzero)(void *, size_t);
     typedef void BPF_FNTYPE(bsalt)(void *, size_t);
     typedef void BPF_FNTYPE(bcopy)(const void *src, void *dest, size_t n);
@@ -48,6 +49,7 @@ extern "C" {
         BPF_FUNC_bpf_map_lookup_elem = 1,
         BPF_FUNC_bpf_map_update_elem = 2,
         BPF_FUNC_bpf_map_delete_elem = 3,
+        BPF_FUNC_bpf_trace = 23,
         BPF_FUNC_bsalt = 24,
         BPF_FUNC_crypt_verify = 25,
         BPF_FUNC_digest_init = 26,

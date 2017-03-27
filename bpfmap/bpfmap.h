@@ -1,3 +1,5 @@
+// -*- c-basic-offset: 4; indent-tabs-mode: nil -*-
+
 #ifndef __EBPF_BPFMAP_H
 #define __EBPF_BPFMAP_H
 
@@ -53,11 +55,12 @@ struct bpf_map_ops {
     struct bpf_map *(*map_alloc)(union bpf_attr *attr);
     void (*map_release)(struct bpf_map *map);
     void (*map_free)(struct bpf_map *map);
-    int (*map_get_next_key)(struct bpf_map *map, void *key, void *next_key);
+    int (*map_get_next_key)(struct bpf_map *map, const void *key, void *next_key);
 
-    void *(*map_lookup_elem)(struct bpf_map *map, void *key);
-    int (*map_update_elem)(struct bpf_map *map, void *key, void *value, uint64_t flags);
-    int (*map_delete_elem)(struct bpf_map *map, void *key);
+    void *(*map_lookup_elem)(struct bpf_map *map, const void *key);
+    int (*map_update_elem)(struct bpf_map *map, const void *key,
+                           const void *value, uint64_t flags);
+    int (*map_delete_elem)(struct bpf_map *map, const void *key);
 };
 
 struct bpf_map {
@@ -85,10 +88,12 @@ struct bpf_array {
     };
 };
 
-int bpf_create_map(enum bpf_map_type map_type, int key_size, int value_size, int max_entries);
-int bpf_update_elem(int map, void *key, void *value, unsigned long long flags);
-int bpf_lookup_elem(int map, void *key, void *value);
-int bpf_delete_elem(int map, void *key);
-int bpf_get_next_key(int map, void *key, void *next_key);
+int bpf_create_map(enum bpf_map_type map_type, int key_size,
+                   int value_size, int max_entries);
+int bpf_update_elem(int map, const void *key, const void *value,
+                    unsigned long long flags);
+int bpf_lookup_elem(int map, const void *key, void *value);
+int bpf_delete_elem(int map, const void *key);
+int bpf_get_next_key(int map, const void *key, void *next_key);
 
 #endif

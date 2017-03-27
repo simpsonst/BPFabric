@@ -11,6 +11,7 @@ BPF_FNDEFN(bpf_map_update_elem);
 BPF_FNDEFN(bpf_map_delete_elem);
 BPF_FNDEFN(bpf_notify);
 BPF_FNDEFN(bpf_debug);
+BPF_FNDEFN(bpf_trace);
 BPF_FNDEFN(bzero);
 BPF_FNDEFN(bsalt);
 BPF_FNDEFN(bcopy);

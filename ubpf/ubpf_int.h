@@ -21,7 +21,8 @@
 #include "ebpf.h"
 
 #define MAX_INSTS 65536
-#define STACK_SIZE 16384
+//#define STACK_SIZE 16384
+#define STACK_SIZE 32768
 
 struct ebpf_inst;
 typedef uint64_t (*ext_func)(uint64_t arg0, uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4);

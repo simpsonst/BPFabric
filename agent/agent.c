@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include <inttypes.h>
 #include <signal.h>
 
 #include <unistd.h>
@@ -493,6 +493,7 @@ uint64_t bpf_notify(uint64_t r1, uint64_t r2, uint64_t r3, uint64_t r4, uint64_t
 BPF_FNCHECK(bzero);
 BPF_FNCHECK(bcopy);
 static BPF_FNCHECK(bsalt);
+static BPF_FNCHECK(bpf_trace);
 static BPF_FNCHECK(digest_init);
 static BPF_FNCHECK(digest_update);
 static BPF_FNCHECK(digest_final);
@@ -533,6 +534,7 @@ void *agent_task()
     BPF_REGISTER(vm, bzero);
     BPF_REGISTER(vm, bcopy);
     BPF_REGISTER(vm, bsalt);
+    BPF_REGISTER(vm, bpf_trace);
     ubpf_register(vm, 31, "bpf_notify", bpf_notify);
     ubpf_register(vm, 32, "bpf_debug", bpf_debug);
 
@@ -620,6 +622,12 @@ static void bsalt(void *base, size_t len)
         *p = rand() / (RAND_MAX + 1.0) * 256;
         len--;
     }
+}
+
+static void bpf_trace(const char *fn, uint64_t line, uint64_t value)
+{
+    fprintf(stderr, "BPF: %s:%" PRIu64 " => %" PRIu64 " (%" PRIx64 ")\n",
+            fn, line, value, value);
 }
 
 #include <openssl/sha.h>
