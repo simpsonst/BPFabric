@@ -12,6 +12,7 @@ struct bpf_map_def SEC("maps") inports = {
 
 uint64_t prog(struct packet *pkt)
 {
+    uint32_t flood = FLOOD;
     uint32_t *out_port;
 
     // if the source is not a broadcast or multicast
@@ -22,15 +23,14 @@ uint64_t prog(struct packet *pkt)
 
     // Flood if the destination is broadcast or multicast
     if (pkt->eth.h_dest[0] & 1) {
-        return FLOOD;
-    }
-
-    // Lookup the output port
-    if (bpf_map_lookup_elem(&inports, pkt->eth.h_dest, &out_port) == -1) {
+        out_port = &flood;
+    } else if (/* Lookup the output port */
+               bpf_map_lookup_elem(&inports, pkt->eth.h_dest, &out_port) == -1) {
         // If no entry was found flood
-        return FLOOD;
+        out_port = &flood;
     }
 
+    //bpf_trace("TRANSFER", pkt->metadata.in_port, *out_port);
     return *out_port;
 }
 char _license[] SEC("license") = "GPL";
