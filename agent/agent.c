@@ -629,6 +629,7 @@ static void bpf_trace(const char *fn, uint64_t line, uint64_t value)
     fprintf(stderr, "BPF dpid=%u: %s:%" PRIu64 " => %" PRIu64
             " (0x%" PRIx64 ")\n",
             (unsigned) agent.options->dpid, fn, line, value, value);
+    fflush(stderr);
 }
 
 #include <openssl/sha.h>
