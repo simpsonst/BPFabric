@@ -502,7 +502,7 @@ static BPF_FNCHECK(crypt_verify);
 void *agent_task()
 {
     //
-    uint8_t buf[8192]; // TODO should have a proper buffer that wraps around and expand if the message is bigger than this
+    uint8_t buf[65536]; // TODO should have a proper buffer that wraps around and expand if the message is bigger than this
     struct sockaddr_in saddr;
 
     //
