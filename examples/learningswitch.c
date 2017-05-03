@@ -7,7 +7,7 @@ struct bpf_map_def SEC("maps") inports = {
     .type = BPF_MAP_TYPE_HASH,
     .key_size = 6, // MAC address is the key
     .value_size = sizeof(uint32_t),
-    .max_entries = 256,
+    .max_entries = 10000,
 };
 
 uint64_t prog(struct packet *pkt)
