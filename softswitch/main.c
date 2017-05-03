@@ -404,7 +404,9 @@ int main(int argc, char **argv)
         pfds[i].revents = 0;
 
         //
-        printf("Interface %s, index %d, fd %d\n", arguments.interfaces[i], i, dataplane.ports[i].fd);
+        printf("DPID %u Interface %s, index %d, fd %d\n",
+	       (unsigned) dataplane.dpid,
+	       arguments.interfaces[i], i, dataplane.ports[i].fd);
     }
     printf("\n");
 
