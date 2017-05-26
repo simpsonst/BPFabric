@@ -1,0 +1,52 @@
+#!/bin/bash
+
+inputs=()
+
+while [ $# -gt 0 ] ; do
+    arg="$1"
+    shift
+
+    case "$arg" in
+	-o)
+	    outfile="$1"
+	    shift
+	    ;;
+	-l*)
+	    ;;
+	-L)
+	    shift
+	    ;;
+	-L*)
+	    ;;
+	-I)
+	    shift
+	    ;;
+	-I*)
+	    ;;
+	-O*)
+	    ;;
+	-m*)
+	    ;;
+	-target)
+	    shift
+	    ;;
+	*)
+	    inputs=("${inputs[@]}" "$arg")
+	    ;;
+    esac
+done
+
+if [ ${#inputs[@]} -ne 1 ] ; then
+    printf > /dev/stderr \
+	   '%s: can only link one object; %d found\n' "$0" ${#inputs[@]}
+    printf '  Module: %s\n' "${inputs[@]}"
+    exit 1
+fi
+
+if [ "$outfile" = "" ] ; then
+    printf > /dev/stderr \
+	   '%s: missing -o outfile' "$0"
+    exit 1
+fi
+
+cp "${inputs[0]}" "$outfile"
