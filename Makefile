@@ -176,3 +176,9 @@ endef
 install-python::
 	@printf 'Installing python in [%s]:\n' '$(PYTHON_LIBDIR)'
 	@$(foreach D,$(python_dirs),$(call PYTHON_CMDS,$D))
+
+clean::
+	$(MAKE) -C dpdkswitch clean
+
+blank::
+	$(RM) -r dpdkswitch/build
