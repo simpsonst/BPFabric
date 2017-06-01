@@ -201,7 +201,7 @@ $(BINODEPS_TMPDIR)/%.proto-py: $(BINODEPS_SRCDIR)/%.proto
 	@$(TOUCH) '$@'
 
 $(BINODEPS_TMPDIR)/%.proto-c: $(BINODEPS_SRCDIR)/%.proto
-	@$(PRINTF) '[protoc C] %s\n' '$*'
+	@$(PRINTF) '[protobuf C] %s\n' '$*'
 	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_TMPDIR)/protobuf/$*)'
 	@($(CD) $(BINODEPS_SRCDIR) ; \
 	  $(PROTOC.c) --c_out='$(abspath $(BINODEPS_TMPDIR)/protobuf)' '$*.proto')
