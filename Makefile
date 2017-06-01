@@ -17,6 +17,8 @@ SUBMODEL_LABEL@bpf=BPF
 CPPFLAGS@bpf += -target bpf
 CC@bpf=clang
 
+BINDIR@bpf=$(LIBDIR)/bpfabric
+
 -include BPFabric-env.mk
 
 EXAMPLES += ewma
@@ -149,8 +151,7 @@ headers += ebpf_functions.h
 headers += ebpf_switch.h
 
 
-
-test_binaries.c@bpf += $(EXAMPLES)
+binaries.c@bpf += $(EXAMPLES)
 define BPF_DEFS
 $1_obj += $1
 
