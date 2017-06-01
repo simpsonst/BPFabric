@@ -219,5 +219,7 @@ $(BINODEPS_SRCDIR_DYN)/%.pb-c.h: $(BINODEPS_TMPDIR)/%.proto-c
 install-binaries@default::
 	$(INSTALL) -m 0644 $(BINODEPS_OUTDIR)/dpdkswitch.map $(BINDIR@default)
 
+install:: install-binaries install-libraries
+
 all:: installed-binaries
 all:: installed-libraries
