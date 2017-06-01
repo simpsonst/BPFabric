@@ -46,9 +46,9 @@ APP = dpdkswitch
 # all source are stored in SRCS-y
 VPATH = ./
 SRCS-y := main.c
-LDLIBS := $(ROOT_DIR)/../agent/agent.a $(ROOT_DIR)/../ubpf/libubpf.a $(ROOT_DIR)/../protocol/src/c/protocol.a $(ROOT_DIR)/../bpfmap/libbpfmap.a -lprotobuf-c -lssl -lcrypto -luECC
+LDLIBS := $(ROOT_DIR)/../out/libagent.a $(ROOT_DIR)/../out/libubpf.a $(ROOT_DIR)/../out/libprotocol.a $(ROOT_DIR)/../out/libbpfmap.a -lprotobuf-c -lssl -lcrypto -luECC
 
-CFLAGS += -g -I$(ROOT_DIR)/../includes -I$(ROOT_DIR)/../agent -I$(ROOT_DIR)/../ubpf/inc -I$(ROOT_DIR)/../protocol/src/c
+CFLAGS += -g -I$(ROOT_DIR)/../tmp/obj
 CFLAGS += $(WERROR_FLAGS)
 
 include $(RTE_SDK)/mk/rte.extapp.mk
