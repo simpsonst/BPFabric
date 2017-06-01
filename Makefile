@@ -129,7 +129,7 @@ install-binaries@default::
 	$(INSTALL) -m 0755 $(BINODEPS_OUTDIR)/dpdkswitch $(BINDIR@default)
 	$(INSTALL) -m 0644 $(BINODEPS_OUTDIR)/dpdkswitch.map $(BINDIR@default)
 
-install:: install-binaries install-libraries
+install:: install-binaries install-libraries install-python
 
 all:: installed-binaries
 all:: installed-libraries
@@ -153,7 +153,7 @@ endif
 PYTHON_LIBDIR ?= $(LIBDIR)/python2.7/site-packages
 
 define PYTHON_DEFS
-python_files-$1 := $$(shell $$(FIND) '$1' -name "*.py" -printf '%P\n')
+python_files-$1=$$(shell $$(FIND) '$1' -name "*.py" -printf '%P\n')
 python_dsfiles-$1=$$(python_files-$1:%=./%)
 python_subdirs-$1=$$(sort $$(dir $$(python_dsfiles-$1)))
 
@@ -169,8 +169,6 @@ $(INSTALL) -m 0644 $(foreach F,$(filter-out $(foreach SD,$(filter-out $2,$(filte
 endef
 
 define PYTHON_CMDS
-#echo '$1 files:' $(python_files-$1)
-#echo '$1 subdirs:' $(python_subdirs-$1)
 $(foreach SD,$(python_subdirs-$1),$(call PYTHON_SUBDIR_CMDS,$1,$(SD)))
 
 endef
