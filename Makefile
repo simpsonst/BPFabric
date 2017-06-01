@@ -193,10 +193,10 @@ $(BINODEPS_SRCDIR_DYN)/dpdkswitch.o: CFLAGS@default += \
 
 
 $(BINODEPS_TMPDIR)/%.proto-py: $(BINODEPS_SRCDIR)/%.proto
-	@$(PRINTF) '[protoc Python] %s\n' '$*'
-	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_OUTDIR)/$*)'
+	@$(PRINTF) '[protobuf Python] %s\n' '$*'
+	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_OUTDIR)/python2.7/$*)'
 	@($(CD) $(BINODEPS_SRCDIR) ; \
-	  $(PROTOC.py) --python_out='$(abspath $(BINODEPS_OUTDIR))' \
+	  $(PROTOC.py) --python_out='$(abspath $(BINODEPS_OUTDIR)/python2.7)' \
 	    '$*.proto')
 	@$(TOUCH) '$@'
 
