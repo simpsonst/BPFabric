@@ -216,5 +216,8 @@ $(BINODEPS_SRCDIR_DYN)/%.pb-c.h: $(BINODEPS_TMPDIR)/%.proto-c
 	  ($(CP) '$(BINODEPS_TMPDIR)/protobuf/$*.pb-c.h' '$@' && \
 	   $(PRINTF) '[protoc C cp] %s.h\n' '$*')
 
+install-binaries@default::
+	$(INSTALL) -m 0644 $(BINODEPS_OUTDIR)/dpdkswitch.map $(BINDIR@default)
+
 all:: installed-binaries
 all:: installed-libraries
