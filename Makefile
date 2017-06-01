@@ -216,6 +216,5 @@ $(BINODEPS_SRCDIR_DYN)/%.pb-c.h: $(BINODEPS_TMPDIR)/%.proto-c
 	  ($(CP) '$(BINODEPS_TMPDIR)/protobuf/$*.pb-c.h' '$@' && \
 	   $(PRINTF) '[protoc C cp] %s.h\n' '$*')
 
-all:: $(EXAMPLES:%=$(BINODEPS_OUTDIR)/%$(SUBMODEL_SFX@bpf))
 all:: installed-binaries
 all:: installed-libraries
