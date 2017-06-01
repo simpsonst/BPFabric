@@ -19,6 +19,8 @@ CC@bpf=clang
 
 BINDIR@bpf=$(LIBDIR)/bpfabric
 
+BINODEPS_PROTODIR=src/protobuf
+
 -include BPFabric-env.mk
 
 EXAMPLES += ewma
@@ -194,19 +196,18 @@ $(BINODEPS_SRCDIR_DYN)/dpdkswitch.o: CFLAGS@default += \
 	-DRTE_MACHINE_CPUFLAG_AVX \
 
 
-$(BINODEPS_TMPDIR)/%.proto-py: $(BINODEPS_SRCDIR)/%.proto
+$(BINODEPS_TMPDIR)/%.proto-py: $(BINODEPS_PROTODIR)/%.proto
 	@$(PRINTF) '[protobuf Python] %s\n' '$*'
 	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_OUTDIR)/python2.7/$*)'
-	@($(CD) $(BINODEPS_SRCDIR) ; \
-	  $(PROTOC.py) --python_out='$(abspath $(BINODEPS_OUTDIR)/python2.7)' \
-	    '$*.proto')
+	@$(PROTOC.py) '-I$(BINODEPS_PROTODIR)' \
+	  --python_out='$(abspath $(BINODEPS_OUTDIR)/python2.7)' '$<'
 	@$(TOUCH) '$@'
 
-$(BINODEPS_TMPDIR)/%.proto-c: $(BINODEPS_SRCDIR)/%.proto
+$(BINODEPS_TMPDIR)/%.proto-c: $(BINODEPS_PROTODIR)/%.proto
 	@$(PRINTF) '[protobuf C] %s\n' '$*'
 	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_TMPDIR)/protobuf/$*)'
-	@($(CD) $(BINODEPS_SRCDIR) ; \
-	  $(PROTOC.c) --c_out='$(abspath $(BINODEPS_TMPDIR)/protobuf)' '$*.proto')
+	@$(PROTOC.c) '-I$(BINODEPS_PROTODIR)' \
+	  --c_out='$(abspath $(BINODEPS_TMPDIR)/protobuf)' '$<'
 	@$(TOUCH) '$@'
 
 $(BINODEPS_SRCDIR_DYN)/%.pb-c.c: $(BINODEPS_TMPDIR)/%.proto-c
