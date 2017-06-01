@@ -150,6 +150,8 @@ headers += ebpf_fntypes.h
 headers += ebpf_functions.h
 headers += ebpf_switch.h
 
+python_dirs += controller
+python_dirs += $(BINODEPS_OUTDIR)/python2.7
 
 binaries.c@bpf += $(EXAMPLES)
 define BPF_DEFS
@@ -223,3 +225,35 @@ install:: install-binaries install-libraries
 
 all:: installed-binaries
 all:: installed-libraries
+
+installed-protobuf:: $(PROTOCOL:%=$(BINODEPS_TMPDIR)/%.proto-py)
+all:: installed-protobuf
+
+PYTHON_LIBDIR ?= $(LIBDIR)/python2.7/site-packages
+
+define PYTHON_DEFS
+python_files-$1 := $$(shell $$(FIND) '$1' -name "*.py" -printf '%P\n')
+python_dsfiles-$1=$$(python_files-$1:%=./%)
+python_subdirs-$1=$$(sort $$(dir $$(python_dsfiles-$1)))
+
+endef
+
+$(foreach D,$(python_dirs),$(eval $(call PYTHON_DEFS,$D)))
+
+define PYTHON_SUBDIR_CMDS
+$(call PRINTLIST,'  %s: ','$(1:%/=%)/$(2:./%=%)','$(foreach F,$(filter-out $(foreach SD,$(filter-out $2,$(filter $2%,$(python_subdirs-$1))),$(SD)%),$(filter $2%,$(python_dsfiles-$1))),$(F:$2%=%))')
+$(INSTALL) -d '$(PYTHON_LIBDIR)/$(2:./%=%)'
+$(INSTALL) -m 0644 $(foreach F,$(filter-out $(foreach SD,$(filter-out $2,$(filter $2%,$(python_subdirs-$1))),$(SD)%),$(filter $2%,$(python_dsfiles-$1))),'$(1:%/=%)/$(F:./%=%)') '$(PYTHON_LIBDIR)/$(2:./%=%)'
+
+endef
+
+define PYTHON_CMDS
+#echo '$1 files:' $(python_files-$1)
+#echo '$1 subdirs:' $(python_subdirs-$1)
+$(foreach SD,$(python_subdirs-$1),$(call PYTHON_SUBDIR_CMDS,$1,$(SD)))
+
+endef
+
+install-python::
+	@printf 'Installing python in [%s]:\n' '$(PYTHON_LIBDIR)'
+	@$(foreach D,$(python_dirs),$(call PYTHON_CMDS,$D))
