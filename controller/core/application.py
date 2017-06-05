@@ -1,4 +1,7 @@
 import time
+from os.path import exists, join, abspath
+from os import pathsep, extsep, environ
+from string import split
 
 from twisted.internet import reactor
 
@@ -29,3 +32,13 @@ class eBPFCoreApplication(object):
 
     def run(self):
         reactor.run()
+
+    def lookup_module(self, stem):
+        found = 0
+        leaf = stem + extsep + 'o'
+        items = split(environ['BPFABRICPATH'], pathsep)
+        for item in items:
+            cand = join(item, leaf)
+            if exists(cand):
+                return abspath(cand)
+        return None
