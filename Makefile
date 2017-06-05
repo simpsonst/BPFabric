@@ -143,7 +143,7 @@ install-binaries@default::
 	$(INSTALL) -m 0755 $(BINODEPS_OUTDIR)/dpdkswitch $(BINDIR@default)
 	$(INSTALL) -m 0644 $(BINODEPS_OUTDIR)/dpdkswitch.map $(BINDIR@default)
 
-install:: install-binaries install-libraries install-python-zips
+install:: install-binaries install-libraries install-python-zips install-headers
 
 all:: installed-binaries
 all:: installed-libraries
