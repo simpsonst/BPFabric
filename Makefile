@@ -89,7 +89,7 @@ python2.7_zips += mininet
 python2.7_zips += tools
 python2.7_zips += protocol
 
-protocol_pyroot=$(BINODEPS_OUTDIR)/python2.7/site-packages
+protocol_pyroot=$(BINODEPS_TMPDIR)/python2.7/protobuf
 
 controller_pyname=bpfabric/controller
 mininet_pyname=bpfabric/mininet
@@ -117,9 +117,9 @@ $(BINODEPS_OUTDIR)/python2.7/protocol.zip: | \
 
 $(BINODEPS_TMPDIR)/%.proto-py: $(BINODEPS_PROTODIR)/%.proto
 	@$(PRINTF) '[protobuf Python] %s\n' '$*'
-	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_OUTDIR)/python2.7/site-packages/$*)'
+	@$(MKDIR) '$(@D)' '$(dir $(BINODEPS_TMPDIR)/python2.7/protobuf/$*)'
 	@$(PROTOC.py) '-I$(BINODEPS_PROTODIR)' \
-	  --python_out='$(abspath $(BINODEPS_OUTDIR)/python2.7/site-packages)' \
+	  --python_out='$(abspath $(BINODEPS_TMPDIR)/python2.7/protobuf)' \
 	 '$<'
 	@$(TOUCH) '$@'
 
