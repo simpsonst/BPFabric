@@ -73,6 +73,7 @@ softswitch_lib += -lcrypto
 softswitch_lib += -luECC
 
 headers += ubpf.h
+headers += bpfabric/dummy/openssl/opensslconf.h
 headers += bpfmap.h
 headers += ebpf_consts.h
 headers += ebpf_crypt.h
