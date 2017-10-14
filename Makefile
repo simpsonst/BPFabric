@@ -139,10 +139,6 @@ $(BINODEPS_SRCDIR_DYN)/%.pb-c.h: $(BINODEPS_TMPDIR)/%.proto-c
 	  ($(CP) '$(BINODEPS_TMPDIR)/protobuf/$*.pb-c.h' '$@' && \
 	   $(PRINTF) '[protoc C cp] %s.h\n' '$*')
 
-install-binaries@default::
-	$(INSTALL) -m 0755 $(BINODEPS_OUTDIR)/dpdkswitch $(BINDIR@default)
-	$(INSTALL) -m 0644 $(BINODEPS_OUTDIR)/dpdkswitch.map $(BINDIR@default)
-
 install:: install-binaries install-libraries install-python-zips install-headers
 
 all:: installed-binaries
@@ -163,6 +159,10 @@ $(BINODEPS_OUTDIR)/dpdkswitch: $(PROTOCOL:%=$(BINODEPS_SRCDIR_DYN)/%.pb-c.h) \
 
 clean::
 	$(MAKE) -C dpdkswitch clean
+
+install-binaries@default::
+	$(INSTALL) -m 0755 $(BINODEPS_OUTDIR)/dpdkswitch $(BINDIR@default)
+	$(INSTALL) -m 0644 $(BINODEPS_OUTDIR)/dpdkswitch.map $(BINDIR@default)
 endif
 
 PYTHON_VERSIONS += 2.7
