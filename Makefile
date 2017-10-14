@@ -160,6 +160,9 @@ $(BINODEPS_OUTDIR)/dpdkswitch: $(PROTOCOL:%=$(BINODEPS_SRCDIR_DYN)/%.pb-c.h) \
 	$(MAKE) -C dpdkswitch
 	$(CP) dpdkswitch/build/app/dpdkswitch \
 	  dpdkswitch/build/app/dpdkswitch.map $(BINODEPS_OUTDIR)
+
+clean::
+	$(MAKE) -C dpdkswitch clean
 endif
 
 PYTHON_VERSIONS += 2.7
@@ -268,9 +271,6 @@ $$(BINODEPS_OUTDIR)/python$1/%.zip:
 endef
 
 $(foreach V,$(PYTHON_VERSIONS),$(eval $(call PYTHON_VDEPS,$V)))
-
-clean::
-	$(MAKE) -C dpdkswitch clean
 
 blank::
 	$(RM) -r dpdkswitch/build
