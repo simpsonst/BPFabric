@@ -1,3 +1,5 @@
+// -*- c-basic-offset: 4; indent-tabs-mode: nil -*-
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -316,7 +318,7 @@ parse_opt(int key, char *arg, struct argp_state *state)
 static struct argp argp = { options, parse_opt, args_doc, doc };
 
 unsigned long long random_dpid() {
-    srand(time(NULL));
+    //srand(time(NULL));
     unsigned long long dpid = 0;
 
     for (int i = 0; i < 5; i++) {
@@ -371,6 +373,21 @@ void transmit(struct metadatahdr *buf, int len, uint32_t port, int flags) {
 
 int main(int argc, char **argv)
 {
+    {
+        FILE *ur = fopen("/dev/urandom", "rw");
+        if (ur != NULL) {
+            unsigned seed;
+            int got = fread(&seed, sizeof seed, 1, ur);
+            fclose(ur);
+            if (got == 1)
+                srand(seed);
+            else
+                fprintf(stderr, "%s: warning: random seed not read\n", argv[0]);
+        } else {
+            fprintf(stderr, "%s: warning: random seed not set\n", argv[0]);
+        }
+    }
+
     int i;
 
     /* Argument Parsing */
